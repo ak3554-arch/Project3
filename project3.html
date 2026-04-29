@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 3 Chat App</title>
+
+    <script>
+        function loadUsers() {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function() {
+                document.getElementById("users").innerHTML = this.responseText;
+            };
+
+            xhttp.open("GET", "get_users.php", true);
+            xhttp.send();
+        }
+
+        function sendMessage() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var message = document.getElementById("message").value;
+
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function() {
+                alert(this.responseText);
+            };
+
+            xhttp.open("POST", "send_message.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("username=" + username + "&password=" + password + "&message=" + message);
+        }
+
+        function getMessage() {
+            var chatuser = document.getElementById("chatuser").value;
+
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onload = function() {
+                document.getElementById("chatbox").value = this.responseText;
+            };
+
+            xhttp.open("GET", "get_message.php?username=" + chatuser, true);
+            xhttp.send();
+        }
+    </script>
+</head>
+
+<body onload="loadUsers()">
+
+<h2>Simple Chat Application</h2>
+
+<h3>Users</h3>
+<div id="users"></div>
+
+<hr>
+
+<h3>Send Message</h3>
+
+Username:<br>
+<input type="text" id="username"><br><br>
+
+Password:<br>
+<input type="password" id="password"><br><br>
+
+Message:<br>
+<input type="text" id="message"><br><br>
+
+<button onclick="sendMessage()">Send Message</button>
+
+<hr>
+
+<h3>View Chat Message</h3>
+
+Enter person you want to chat with:<br>
+<input type="text" id="chatuser" onkeyup="getMessage()"><br><br>
+
+Chat Message:<br>
+<textarea id="chatbox" rows="6" cols="50"></textarea>
+
+</body>
+</html>
